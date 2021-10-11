@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_all_product.xml" value="0.2674772036474164" />
+        <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_main.xml" value="0.5401041666666667" />
+        <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_qr_scanner.xml" value="0.33" />
+        <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_stockin.xml" value="0.4609375" />
+        <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_stockinphp.xml" value="0.5" />
+        <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/itemlist.xml" value="0.2674772036474164" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

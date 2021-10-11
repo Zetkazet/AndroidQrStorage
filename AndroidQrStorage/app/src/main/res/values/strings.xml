@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AndroidQrStorage</string>
+    <string name="qr_scanner">Qr Scanner</string>
+    <string name="stock_in">Stock In</string>
+    <string name="stock_out">Stock Out</string>
+    <string name="id_account">ID Account</string>
+</resources>
