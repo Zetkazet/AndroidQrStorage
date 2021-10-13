@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_all_product.xml" value="0.2674772036474164" />
+        <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_login.xml" value="0.33125" />
         <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_main.xml" value="0.5401041666666667" />
         <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_qr_scanner.xml" value="0.33" />
+        <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_register.xml" value="0.33125" />
         <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_stockin.xml" value="0.4609375" />
         <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/activity_stockinphp.xml" value="0.5" />
         <entry key="..\:/Program/AppDevelopment/AndroidQrStorage/AndroidQrStorage/app/src/main/res/layout/itemlist.xml" value="0.2674772036474164" />
