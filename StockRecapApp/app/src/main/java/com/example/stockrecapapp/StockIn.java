@@ -25,9 +25,9 @@ public class StockIn extends AppCompatActivity {
 
     public static final String TAG_ID = "id";
     public static final String TAG_USERNAME = "username";
+    public static final String TAG_TYPE = "scantype";
 
-
-    String id, username;
+    String id, username, scantype;
     SharedPreferences sharedpreferences;
 
 
@@ -40,6 +40,7 @@ public class StockIn extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(LoginPage.my_shared_preferences, Context.MODE_PRIVATE);
 
+        scantype = getIntent().getStringExtra(TAG_TYPE);
         id = getIntent().getStringExtra(TAG_ID);
         username = getIntent().getStringExtra(TAG_USERNAME);
 
@@ -72,13 +73,26 @@ public class StockIn extends AppCompatActivity {
                                 }
                             }
                         }
+                        if(scantype.equals("in")) {
+                            Intent i = new Intent(StockIn.this, StockInPhp.class);
+                            i.putExtra(TAG_TYPE, scantype);
+                            i.putExtra("productid", productid);
+                            i.putExtra("productname", productname);
+                            i.putExtra(TAG_ID, id);
+                            i.putExtra(TAG_USERNAME, username);
+                            startActivity(i);
+                        }
 
-                        Intent i = new Intent(StockIn.this, StockInPhp.class);
-                        i.putExtra("productid",productid);
-                        i.putExtra("productname",productname);
-                        i.putExtra(TAG_ID, id);
-                        i.putExtra(TAG_USERNAME, username);
-                        startActivity(i);
+                        else if(scantype.equals("out")){
+                            Intent i = new Intent(StockIn.this, StockInPhp.class);
+                            i.putExtra(TAG_TYPE, scantype );
+                            i.putExtra("productid", productid);
+                            i.putExtra("productname", productname);
+                            i.putExtra(TAG_ID, id);
+                            i.putExtra(TAG_USERNAME, username);
+                            startActivity(i);
+
+                        }
 
 
 

@@ -33,10 +33,12 @@ public class StockInPhp extends AppCompatActivity {
 
     ProgressDialog pDialog;
 
+    String scantype;
     int success;
     ConnectivityManager conMgr;
 
-    private String url = Server.URL + "StockIn.php";
+    private String urlin = Server.URL + "StockIn.php";
+    private String urlout = Server.URL + "StockOut.php";
 
     private static final String TAG = StockInPhp.class.getSimpleName();
 
@@ -45,6 +47,7 @@ public class StockInPhp extends AppCompatActivity {
 
     public final static String TAG_USERNAME = "username";
     public final static String TAG_ID = "id";
+    public static final String TAG_TYPE = "scantype";
 
     String tag_json_obj = "json_obj_req";
 
@@ -79,12 +82,13 @@ public class StockInPhp extends AppCompatActivity {
 
         sendbutton = findViewById(R.id.sendbutton);
 
+        scantype = getIntent().getStringExtra(TAG_TYPE);
         String productid = getIntent().getStringExtra("productid");
         String productname = getIntent().getStringExtra("productname");
         String accountid = getIntent().getStringExtra(TAG_ID);
 
         ProductIdView.setText(productid);
-        ProductNameView.setText(accountid);
+        ProductNameView.setText(productname);
 
 
 
@@ -94,12 +98,14 @@ public class StockInPhp extends AppCompatActivity {
             public void onClick(View view) {
                 productquantity = Integer.parseInt(ProductQuantityText.getText().toString());
 
-                if (productquantity>0 ){
+                if (productquantity>0 && scantype.equals("in")){
                     updatestockin(accountid, productid, productquantity);
 
                 }
 
-
+                else if(productquantity>0 && scantype.equals("out")){
+                    updatestockout(accountid, productid, productquantity);
+                }
             }
         });
 
@@ -111,7 +117,80 @@ public class StockInPhp extends AppCompatActivity {
         pDialog.setMessage("Sending ...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.POST, urlin, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "Send Report:  " + response.toString());
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    success = jObj.getInt(TAG_SUCCESS);
+
+                    // Check for error node in json
+                    if (success == 1) {
+
+
+                        Log.e("Receipt Added!", jObj.toString());
+
+                        Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
+
+
+                        // Memanggil main activity
+                        Intent intent = new Intent(StockInPhp.this, MainActivity.class);
+                        finish();
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Send Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+
+                hideDialog();
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", username);
+                params.put("productid", productid);
+                params.put("productquantity", Integer.toString(productquantity));
+
+                return params;
+            }
+
+        };
+
+        AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
+
+
+    }
+
+    private void updatestockout (final String username, final String productid, final int productquantity){
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setMessage("Sending ...");
+        showDialog();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, urlout, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

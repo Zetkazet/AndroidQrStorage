@@ -13,13 +13,15 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn_logout,btn_stock_in;
+    Button btn_logout,btn_stock_in,btn_stock_out;
     TextView txt_id, txt_username;
-    String id, username;
+    String id, username , scantype;
+
     SharedPreferences sharedpreferences;
 
     public static final String TAG_ID = "id";
     public static final String TAG_USERNAME = "username";
+    public static final String TAG_TYPE = "scantype";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         btn_logout = (Button) findViewById(R.id.btn_logout);
 
         btn_stock_in = findViewById(R.id.btn_stock_in);
+        btn_stock_out = findViewById(R.id.btn_stock_out);
 
         sharedpreferences = getSharedPreferences(LoginPage.my_shared_preferences, Context.MODE_PRIVATE);
 
@@ -60,9 +63,34 @@ public class MainActivity extends AppCompatActivity {
 
         btn_stock_in.setOnClickListener(new View.OnClickListener() {
 
+
             @Override
             public void onClick(View v) {
+
+                scantype = "in";
+
                 Intent intent = new Intent(MainActivity.this, StockIn.class);
+                intent.putExtra(TAG_TYPE, scantype );
+                intent.putExtra(TAG_ID, id);
+                intent.putExtra(TAG_USERNAME, username);
+                finish();
+                startActivity(intent);
+
+            };
+
+
+        });
+
+        btn_stock_out.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+
+                scantype = "out";
+
+                Intent intent = new Intent(MainActivity.this, StockIn.class);
+                intent.putExtra(TAG_TYPE, scantype);
                 intent.putExtra(TAG_ID, id);
                 intent.putExtra(TAG_USERNAME, username);
                 finish();
