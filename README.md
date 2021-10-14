@@ -26,6 +26,10 @@ Web :
 Backend :
 - stock in (D)
 - Stock out (d)
-- Add user (wp);
+- Add user (wp)
 - add item (wp)
+
+Front end:
+
+- all (wp)
 
