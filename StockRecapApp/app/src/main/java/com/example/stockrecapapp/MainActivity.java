@@ -100,5 +100,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+        btn_stock_out.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, StockView.class);
+                finish();
+                startActivity(intent);
+
+            };
+
+
+        });
     }
 }

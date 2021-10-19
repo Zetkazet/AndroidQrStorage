@@ -42,6 +42,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Stock out" />
+        <Button
+            android:id="@+id/btn_stock_view"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="View Stock" />
 
         <Button
             android:id="@+id/btn_logout"
