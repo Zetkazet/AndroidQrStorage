@@ -23,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.stockrecapapp.App.AppController;
 import com.example.stockrecapapp.Util.Server;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -131,6 +132,8 @@ public class StockInPhp extends AppCompatActivity {
                     // Check for error node in json
                     if (success == 1) {
 
+
+                        JSONArray result = jsonObject.getJSONArray(TAG_JSON_ARRAY);
 
                         Log.e("Receipt Added!", jObj.toString());
 

@@ -17,6 +17,7 @@
         android:theme="@style/Theme.StockRecapApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
+
         <activity
             android:name=".StockInPhp"
             android:exported="true" />

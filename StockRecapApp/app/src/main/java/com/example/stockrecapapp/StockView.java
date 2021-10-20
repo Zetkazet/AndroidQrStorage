@@ -109,15 +109,7 @@ public class StockView extends ListActivity {
         listView.setAdapter(adapter);
     }
 
-    private void showDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
 
-    private void hideDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
 
     private void getJSON(){
         class GetJSON extends AsyncTask<Void,Void,String>{
