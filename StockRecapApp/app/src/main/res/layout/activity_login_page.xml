@@ -7,16 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <View
-            android:id="@+id/View1"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="center"
-            android:background="#448AFF" />
 
         <TextView
             android:id="@+id/TextView2"
@@ -24,8 +17,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dip"
-            android:text="WELCOME, LOGIN BELOW"
-            android:textSize="16dip" />
+            android:text="Selamat Datang Di Stock Viewer"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/TextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Login"
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/txt_username"
@@ -36,6 +38,7 @@
             android:hint="Username"
             android:inputType="textEmailAddress"
             android:singleLine="true" />
+
 
         <EditText
             android:id="@+id/txt_password"
@@ -52,9 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="15dp"
             android:text="Login"
-            android:background="#448AFF"
             android:textColor="#fff"
             android:textStyle="bold" />
 

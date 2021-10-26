@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn_logout,btn_stock_in,btn_stock_out;
+    Button btn_logout,btn_stock_in,btn_stock_out,btn_stock_view;
     TextView txt_id, txt_username;
     String id, username , scantype;
 
@@ -28,20 +28,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txt_id = (TextView) findViewById(R.id.txt_id);
+
         txt_username = (TextView) findViewById(R.id.txt_username);
         btn_logout = (Button) findViewById(R.id.btn_logout);
 
         btn_stock_in = findViewById(R.id.btn_stock_in);
         btn_stock_out = findViewById(R.id.btn_stock_out);
+        btn_stock_view = findViewById(R.id.btn_stock_view);
 
         sharedpreferences = getSharedPreferences(LoginPage.my_shared_preferences, Context.MODE_PRIVATE);
 
         id = getIntent().getStringExtra(TAG_ID);
         username = getIntent().getStringExtra(TAG_USERNAME);
 
-        txt_id.setText("ID : " + id);
-        txt_username.setText("USERNAME : " + username);
+
+        txt_username.setText(username);
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(TAG_TYPE, scantype );
                 intent.putExtra(TAG_ID, id);
                 intent.putExtra(TAG_USERNAME, username);
-                finish();
+
                 startActivity(intent);
 
             };
@@ -93,21 +94,21 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(TAG_TYPE, scantype);
                 intent.putExtra(TAG_ID, id);
                 intent.putExtra(TAG_USERNAME, username);
-                finish();
+
                 startActivity(intent);
 
             };
 
 
         });
-        btn_stock_out.setOnClickListener(new View.OnClickListener() {
+        btn_stock_view.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainActivity.this, StockView.class);
-                finish();
+
                 startActivity(intent);
 
             };

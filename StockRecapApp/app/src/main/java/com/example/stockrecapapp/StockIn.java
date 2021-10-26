@@ -80,16 +80,18 @@ public class StockIn extends AppCompatActivity {
                             i.putExtra("productname", productname);
                             i.putExtra(TAG_ID, id);
                             i.putExtra(TAG_USERNAME, username);
+                            finish();
                             startActivity(i);
                         }
 
                         else if(scantype.equals("out")){
                             Intent i = new Intent(StockIn.this, StockInPhp.class);
-                            i.putExtra(TAG_TYPE, scantype );
+                            i.putExtra(TAG_TYPE, scantype);
                             i.putExtra("productid", productid);
                             i.putExtra("productname", productname);
                             i.putExtra(TAG_ID, id);
                             i.putExtra(TAG_USERNAME, username);
+                            finish();
                             startActivity(i);
 
                         }

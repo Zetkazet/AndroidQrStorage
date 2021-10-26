@@ -35,6 +35,7 @@ public class StockInPhp extends AppCompatActivity {
     ProgressDialog pDialog;
 
     String scantype;
+    String id, username;
     int success;
     ConnectivityManager conMgr;
 
@@ -88,6 +89,9 @@ public class StockInPhp extends AppCompatActivity {
         String productname = getIntent().getStringExtra("productname");
         String accountid = getIntent().getStringExtra(TAG_ID);
 
+        id = getIntent().getStringExtra(TAG_ID);
+        username = getIntent().getStringExtra(TAG_USERNAME);
+
         ProductIdView.setText(productid);
         ProductNameView.setText(productname);
 
@@ -133,7 +137,7 @@ public class StockInPhp extends AppCompatActivity {
                     if (success == 1) {
 
 
-                        JSONArray result = jsonObject.getJSONArray(TAG_JSON_ARRAY);
+                        //JSONArray result = jsonObject.getJSONArray(TAG_JSON_ARRAY);
 
                         Log.e("Receipt Added!", jObj.toString());
 
@@ -143,6 +147,8 @@ public class StockInPhp extends AppCompatActivity {
 
                         // Memanggil main activity
                         Intent intent = new Intent(StockInPhp.this, MainActivity.class);
+                        intent.putExtra(TAG_ID, id);
+                        intent.putExtra(TAG_USERNAME, username);
                         finish();
                         startActivity(intent);
                     } else {
@@ -208,6 +214,8 @@ public class StockInPhp extends AppCompatActivity {
                     if (success == 1) {
 
 
+                        //JSONArray result = jsonObject.getJSONArray(TAG_JSON_ARRAY);
+
                         Log.e("Receipt Added!", jObj.toString());
 
                         Toast.makeText(getApplicationContext(), jObj.getString(TAG_MESSAGE), Toast.LENGTH_LONG).show();
@@ -216,6 +224,8 @@ public class StockInPhp extends AppCompatActivity {
 
                         // Memanggil main activity
                         Intent intent = new Intent(StockInPhp.this, MainActivity.class);
+                        intent.putExtra(TAG_ID, id);
+                        intent.putExtra(TAG_USERNAME, username);
                         finish();
                         startActivity(intent);
                     } else {
@@ -250,14 +260,13 @@ public class StockInPhp extends AppCompatActivity {
                 params.put("productid", productid);
                 params.put("productquantity", Integer.toString(productquantity));
 
+
                 return params;
             }
 
         };
 
         AppController.getInstance().addToRequestQueue(strReq, tag_json_obj);
-
-
     }
 
     private void showDialog() {

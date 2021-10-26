@@ -19,6 +19,10 @@
         tools:targetApi="n">
 
         <activity
+            android:name=".StockView"
+            android:exported="true" />
+
+        <activity
             android:name=".StockInPhp"
             android:exported="true" />
         <activity

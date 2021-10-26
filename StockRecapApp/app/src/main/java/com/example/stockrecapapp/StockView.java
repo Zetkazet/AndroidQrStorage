@@ -1,143 +1,107 @@
 package com.example.stockrecapapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ListActivity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.stockrecapapp.App.AppController;
-import com.example.stockrecapapp.Util.Configuration;
+import com.android.volley.toolbox.Volley;
+import com.example.stockrecapapp.Util.Adapter;
 import com.example.stockrecapapp.Util.Server;
+import com.example.stockrecapapp.model.ProductModel;
+import com.google.android.gms.analytics.ecommerce.Product;
 
-public class StockView extends ListActivity {
+public class StockView extends AppCompatActivity {
 
-    ProgressDialog pDialog;
 
-    String scantype;
-    int success;
-    ConnectivityManager conMgr;
 
-    private String urlread = Server.URL + "StockView.php";
+    //this is the JSON Data URL
+    private String ViewUrl = Server.URL + "StockView.php";
 
-    private static final String TAG = StockInPhp.class.getSimpleName();
+    //a list to store all the products
+    List<ProductModel> productList;
 
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
-    public static final String TAG_JSON_ARRAY="result";
+    //the recyclerview
+    RecyclerView recyclerView;
 
-    public final static String TAG_USERNAME = "username";
-    public final static String TAG_PID = "Product Id";
-    public static final String TAG_ = "scantype";
+    ProductModel productm;
 
-    String tag_json_obj = "json_obj_req";
-
-    private TextView ProductIdView,ProductNameView,ProductQuantityText;
-
-    private Button sendbutton;
-
-    int productquantity;
-
-    private ListView listView;
-
-    private String JSON_STRING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_view);
-        listView = (ListView) findViewById(R.id.listView);
-        //listView.setOnItemClickListener(this);
-        getJSON();
+
+        //getting the recyclerview from xml
+        recyclerView = findViewById(R.id.recycle);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //initializing the productlist
+        productList = new ArrayList<>();
+
+        //this method will fetch and parse json
+        //to display it in recyclerview
+        loadProducts();
     }
 
+    private void loadProducts() {
 
+        /*
+         * Creating a String Request
+         * The request type is GET defined by first parameter
+         * The URL is defined in the second parameter
+         * Then we have a Response Listener and a Error Listener
+         * In response listener we will get the JSON response as a String
+         * */
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, ViewUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting the string to json array object
+                            JSONArray array = new JSONArray(response);
 
-    private void showEmployee(){
-        JSONObject jsonObject = null;
-        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
-        try {
-            jsonObject = new JSONObject(JSON_STRING);
-            JSONArray result = jsonObject.getJSONArray(TAG_JSON_ARRAY);
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
 
-            for(int i = 0; i<result.length(); i++){
-                JSONObject jo = result.getJSONObject(i);
-                String nameproduct = jo.getString("nameproduct");
-                String productquantity = jo.getString("productquantity");
-                HashMap<String,String> employees = new HashMap<>();
+                                //getting product object from json array
+                                JSONObject product = array.getJSONObject(i);
 
-                employees.put("nameproduct",nameproduct);
-                employees.put("productquantity",productquantity);
-                list.add(employees);
-            }
+                                //adding the product to product list
+                                productList.add(new ProductModel(product.getString("id"),product.getString("title"),product.getInt("stock")));
+                            }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                            //creating adapter object and setting it to recyclerview
+                            Adapter adapter = new Adapter(StockView.this, productList);
+                            recyclerView.setAdapter(adapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-        ListAdapter adapter = new SimpleAdapter(
-                StockView.this, list, R.layout.stock_list,
-                new String[]{"nameproduct","productquantity"},
-                new int[]{R.id.txtDescription, R.id.txtAmount});
+                    }
+                });
 
-        listView.setAdapter(adapter);
+        //adding our stringrequest to queue
+        Volley.newRequestQueue(this).add(stringRequest);
     }
-
-
-
-    private void getJSON(){
-        class GetJSON extends AsyncTask<Void,Void,String>{
-
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(StockView.this,"Mengambil Data","Mohon Tunggu...",false,false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                JSON_STRING = s;
-                showEmployee();
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                Configuration rh = new Configuration();
-                String s = rh.sendGetRequest(urlread);
-                return s;
-            }
-        }
-        GetJSON gj = new GetJSON();
-        gj.execute();
-    }
-
 }
+
